@@ -67,8 +67,6 @@ def register_user(request):
 		password1 = request.POST['password']
 		password2 = request.POST['password2']
 
-		
-
 		if password1 != password2:
 			error_msg = "Passwords does not match"
 			return render(request, 'users/register_user.html', {'error_msg': error_msg, })
