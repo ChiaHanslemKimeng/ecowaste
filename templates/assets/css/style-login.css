@@ -1,0 +1,144 @@
+:root {
+    --primary-color: #2a9d8f;
+    --secondary-color: #264653;
+    --light-color: #e9f5f3;
+    --border-color: #e2e8f0;
+  }
+  
+  body {
+    background-color: #f5f9f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login-container {
+    max-width: 550px;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+  }
+  
+  .card-header {
+    background-color: white;
+    border-bottom: 1px solid var(--border-color);
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px 12px 0 0 !important;
+  }
+  
+  .logo-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background-color: var(--light-color);
+    border-radius: 50%;
+    margin-bottom: 16px;
+  }
+  
+  .logo-icon {
+    color: var(--primary-color);
+    font-size: 32px;
+  }
+  
+  .card-title {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  
+  .card-body {
+    padding: 24px;
+  }
+  .user-type{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .plan{
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+  }
+  .plan label{
+    padding-left: 5px;
+  }
+  .plan:hover{
+    background-color: var(--border-color);
+  }
+  .form-control {
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+  }
+  
+  .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(42, 157, 143, 0.25);
+  }
+  
+  .form-label {
+    color: var(--secondary-color);
+    font-weight: 500;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 10px 12px;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+  
+  .btn-primary:hover, .btn-primary:focus {
+    background-color: #238b7e;
+    border-color: #238b7e;
+  }
+  
+  .form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .forgot-password {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
+  .register-link {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  .register-link:hover {
+    text-decoration: underline;
+  }
+  
+  .input-group-text {
+    background-color: white;
+    border-left: none;
+    cursor: pointer;
+  }
+  
+  .password-toggle {
+    border-left: none;
+  }
+  /* toggle user */
+  #admin-name,   #admin-email,   #admin-phone{
+    display: none;
+    flex-direction: row;
+  }
+  

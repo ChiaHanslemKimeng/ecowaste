@@ -1,0 +1,607 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoWaste Management System</title>
+  <!-- Bootstrap CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <!-- Custom CSS -->
+  <style>
+    :root {
+      --primary-color: #2a9d8f;
+      --secondary-color: #264653;
+      --light-color: #e9f5f3;
+      --border-color: #e2e8f0;
+    }
+    
+    body {
+      background-color: #f5f9f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .sidebar {
+      background-color: white;
+      height: 100vh;
+      position: fixed;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .sidebar .nav-link {
+      color: #64748b;
+      padding: 0.75rem 1rem;
+      border-radius: 0.375rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .sidebar .nav-link:hover {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+    }
+    
+    .sidebar .nav-link.active {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    
+    .sidebar .nav-link i {
+      margin-right: 0.5rem;
+    }
+    
+    .navbar-brand {
+      color: var(--secondary-color);
+      font-weight: 600;
+    }
+    
+    .navbar-brand i {
+      color: var(--primary-color);
+    }
+    
+    .main-content {
+      margin-left: 250px;
+    }
+    
+    @media (max-width: 991.98px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+    }
+    
+    .card {
+      border: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      border-radius: 0.5rem;
+    }
+    
+    .stat-card .icon-wrapper {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .progress {
+      height: 8px;
+      background-color: #e2e8f0;
+    }
+    
+    .progress-bar {
+      background-color: var(--primary-color);
+    }
+    
+    .schedule-item {
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .schedule-item .icon-wrapper {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .waste-type-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+    
+    .map-placeholder {
+      background-color: var(--light-color);
+      height: 300px;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    
+    .positive-change {
+      color: #10b981;
+    }
+    
+    .negative-change {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3 col-xl-2 d-none d-lg-block sidebar p-0">
+        <div class="d-flex align-items-center p-3 border-bottom">
+          <i class="bi bi-layers fs-4 me-2" style="color: var(--primary-color);"></i>
+          <span class="navbar-brand mb-0">EcoWaste</span>
+        </div>
+        <div class="p-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <i class="bi bi-house"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-truck"></i> Collections Request
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-trash"></i> Waste Types
+              </a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-calendar"></i> Schedule
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-people"></i> Staff
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-bar-chart"></i> Reports
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-chat-square-text"></i> Messages
+              </a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-gear"></i> Settings
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">
+                <i class="bi bi-gear"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-9 col-xl-10 ms-auto p-0">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-2">
+          <div class="container-fluid">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand d-lg-none" href="#">
+              <i class="bi bi-layers me-2"></i> EcoWaste
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav d-lg-none">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">
+                    <i class="bi bi-house"></i> Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="bi bi-truck"></i> Collections 
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="bi bi-trash"></i> Waste Types
+                  </a>
+                </li>
+              <!--   <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="bi bi-geo-alt"></i> Routes
+                  </a>
+                </li> -->
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="bi bi-calendar"></i> Schedule
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="bi bi-people"></i> Staff
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="bi bi-bar-chart"></i> Reports
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="bi bi-chat-square-text"></i> Messages
+                  </a>
+                </li>
+               
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="bi bi-gear"></i> Settings
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <button class="btn btn-outline-secondary d-none d-md-flex align-items-center">
+                <i class="bi bi-clock me-2"></i> Today's Schedule
+              </button>
+              <div class="position-relative">
+                <button class="btn btn-light rounded-circle position-relative">
+                  <i class="bi bi-chat-square-text"></i>
+                  <span class="notification-badge"></span>
+                </button>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <div class="user-avatar">JD</div>
+                <span class="d-none d-md-block">{{request.user.get_full_name}}</span>
+                <i class="bi bi-chevron-down text-muted small"></i>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div class="p-4">
+          <div class="mb-4">
+            <h1 class="h3 fw-bold" style="color: var(--secondary-color);">Waste Management Dashboard</h1>
+            <p class="text-muted small">Overview of waste collection and recycling operations</p>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-6 col-lg-3">
+              <div class="card stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="text-muted small mb-1">Total Collections</p>
+                    <h3 class="h4 fw-bold mb-0" style="color: var(--secondary-color);">1,284</h3>
+                  </div>
+                  <div class="icon-wrapper">
+                    <i class="bi bi-truck"></i>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <span class="small positive-change">+12.5%</span>
+                  <span class="text-muted small ms-1">vs. last month</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="card stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="text-muted small mb-1">Pending Waste</p>
+                    <h3 class="h4 fw-bold mb-0" style="color: var(--secondary-color);">68</h3>
+                  </div>
+                  <div class="icon-wrapper">
+                    <i class="bi bi-pie-chart"></i>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <span class="small positive-change">+4.3%</span>
+                  <span class="text-muted small ms-1">vs. last month</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="card stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="text-muted small mb-1">Scheduled Waste</p>
+                    <h3 class="h4 fw-bold mb-0" style="color: var(--secondary-color);">24</h3>
+                  </div>
+                  <div class="icon-wrapper">
+                    <i class="bi bi-geo-alt"></i>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <span class="small positive-change">+2</span>
+                  <span class="text-muted small ms-1">new waste pending scheduling</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="card stat-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="text-muted small mb-1">Waste Processed</p>
+                    <h3 class="h4 fw-bold mb-0" style="color: var(--secondary-color);">342 tons</h3>
+                  </div>
+                  <div class="icon-wrapper">
+                    <i class="bi bi-layers"></i>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <span class="small positive-change">+8.7%</span>
+                  <span class="text-muted small ms-1">vs. last month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress and Schedule -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+              <div class="card h-100">
+                <div class="card-header bg-white border-0 pb-0">
+                  <h5 class="card-title">Today's Collection Progress</h5>
+                  <p class="text-muted small">April 7, 2025</p>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>Residential Waste</span>
+                      <span>75%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>Commercial Waste</span>
+                      <span>42%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 42%"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>Recyclables</span>
+                      <span>89%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 89%"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="d-flex justify-content-between mb-1">
+                      <span>Organic Waste</span>
+                      <span>63%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 63%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="card h-100">
+                <div class="card-header bg-white border-0 pb-0">
+                  <h5 class="card-title">Upcoming Collections</h5>
+                  <p class="text-muted small">Next 24 hours</p>
+                </div>
+                <div class="card-body">
+                  <div class="schedule-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center">
+                        <div class="icon-wrapper me-3">
+                          <i class="bi bi-clock"></i>
+                        </div>
+                        <div>
+                          <p class="mb-0 fw-medium">North District</p>
+                          <p class="mb-0 text-muted small">Residential Collection</p>
+                        </div>
+                      </div>
+                      <span class="fw-medium">08:00 AM</span>
+                    </div>
+                  </div>
+                  <div class="schedule-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center">
+                        <div class="icon-wrapper me-3">
+                          <i class="bi bi-clock"></i>
+                        </div>
+                        <div>
+                          <p class="mb-0 fw-medium">Downtown Area</p>
+                          <p class="mb-0 text-muted small">Commercial Collection</p>
+                        </div>
+                      </div>
+                      <span class="fw-medium">10:30 AM</span>
+                    </div>
+                  </div>
+                  <div class="schedule-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center">
+                        <div class="icon-wrapper me-3">
+                          <i class="bi bi-clock"></i>
+                        </div>
+                        <div>
+                          <p class="mb-0 fw-medium">East Side</p>
+                          <p class="mb-0 text-muted small">Recyclables Collection</p>
+                        </div>
+                      </div>
+                      <span class="fw-medium">01:15 PM</span>
+                    </div>
+                  </div>
+                  <div class="schedule-item mb-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center">
+                        <div class="icon-wrapper me-3">
+                          <i class="bi bi-clock"></i>
+                        </div>
+                        <div>
+                          <p class="mb-0 fw-medium">South District</p>
+                          <p class="mb-0 text-muted small">Organic Collection</p>
+                        </div>
+                      </div>
+                      <span class="fw-medium">03:45 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map and Waste Types -->
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="card h-100">
+                <div class="card-header bg-white border-0 pb-0">
+                  <h5 class="card-title">Collection Routes Map</h5>
+                  <p class="text-muted small">Live tracking of collection vehicles</p>
+                </div>
+                <div class="card-body">
+                  <div class="map-placeholder">
+                    <i class="bi bi-geo-alt fs-1 mb-2" style="color: var(--primary-color);"></i>
+                    <p class="text-muted">Interactive map would display here</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="card h-100">
+                <div class="card-header bg-white border-0 pb-0">
+                  <h5 class="card-title">Waste Composition</h5>
+                  <p class="text-muted small">Current month breakdown</p>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <div>
+                        <span class="waste-type-indicator" style="background-color: #264653;"></span>
+                        <span>General Waste</span>
+                      </div>
+                      <span class="fw-medium">42%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 42%; background-color: #264653;"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <div>
+                        <span class="waste-type-indicator" style="background-color: #2a9d8f;"></span>
+                        <span>Recyclables</span>
+                      </div>
+                      <span class="fw-medium">28%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 28%; background-color: #2a9d8f;"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <div>
+                        <span class="waste-type-indicator" style="background-color: #8ab17d;"></span>
+                        <span>Organic</span>
+                      </div>
+                      <span class="fw-medium">18%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 18%; background-color: #8ab17d;"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <div>
+                        <span class="waste-type-indicator" style="background-color: #e9c46a;"></span>
+                        <span>Hazardous</span>
+                      </div>
+                      <span class="fw-medium">7%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 7%; background-color: #e9c46a;"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="d-flex justify-content-between mb-1">
+                      <div>
+                        <span class="waste-type-indicator" style="background-color: #e76f51;"></span>
+                        <span>Other</span>
+                      </div>
+                      <span class="fw-medium">5%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 5%; background-color: #e76f51;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
