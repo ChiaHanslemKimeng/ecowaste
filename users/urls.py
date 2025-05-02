@@ -17,6 +17,10 @@ urlpatterns = (
 
 	path('home/', home, name='home'), 
 
+	path('messages/', messages, name='messages'), 
+
+	path('users/', users, name='users'), 
+
 
 	# path('user_profile/<user_id>/', user_profile, name='user_profile'),
 

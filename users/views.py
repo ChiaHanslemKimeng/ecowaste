@@ -105,3 +105,16 @@ def register_user(request):
 	else:
 		return render(request, 'users/register_user.html', {})
 	
+
+def messages(request):
+	user = request.user
+ 
+	return render(request, 'users/messages.html', {})
+
+
+
+
+def users(request):
+	user = request.user
+ 
+	return render(request, 'users/users.html', {})

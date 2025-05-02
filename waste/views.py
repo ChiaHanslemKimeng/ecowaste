@@ -54,13 +54,13 @@ def add_edit_waste_type(request, wastetype_id):
 
 	else:
 		if get_wastetype:
-			get_institution_id = get_wastetype.id
-			page_title = _("Edit Waste")
+			get_wastetype_id = get_wastetype.id
+			page_title = "Edit Waste"
 		else:
-			get_institution_id = 'new'
-			page_title = _("Register Waste Type")
+			get_wastetype_id = 'new'
+			page_title = "Register Waste Type"
 
-		return render(request, 'setup/add_edit_waste_type.html', {'creating':creating, 'get_wastetype':get_wastetype,  'page_title':page_title, 'get_institution_id':get_institution_id})
+		return render(request, 'waste/add_edit_waste_type.html', {'creating':creating, 'get_wastetype':get_wastetype,  'page_title':page_title, 'get_wastetype_id':get_wastetype_id})
 
 
 @transaction.atomic
@@ -76,7 +76,7 @@ def add_waste_availability(request):
 		if location == '':
 			error_msg = "Location is required"
 			return render(request, 'add_waste_availability.html', {'error_msg':error_msg})
-			
+
 		new_waste = WasteAvailabilityNotification()
 		new_waste.user = user
 		new_waste.waste_type = WasteType.objects.get(id = get_wastetype)
@@ -86,5 +86,5 @@ def add_waste_availability(request):
 
 		return HttpResponseRedirect('/users/home/')
 	else:
-		return render(request, 'add_waste_availability.html', {})
+		return render(request, 'waste/add_waste_availability.html', {})
 	

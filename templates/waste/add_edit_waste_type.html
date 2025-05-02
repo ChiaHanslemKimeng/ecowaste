@@ -1,0 +1,130 @@
+{% extends "index.html" %} 
+{% load static %}
+
+{% block content %}
+<div class="col-lg-9 col-xl-10 ms-auto p-0">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-2">
+      <div class="container-fluid">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand d-lg-none" href="#">
+          <i class="bi bi-layers me-2"></i> EcoWaste
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav d-lg-none">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <i class="bi bi-house"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-truck"></i> Collections
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-trash"></i> Waste Types
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-geo-alt"></i> Routes
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-calendar"></i> Schedule
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-people"></i> Staff
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-bar-chart"></i> Reports
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-chat-square-text"></i> Messages
+              </a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi bi-gear"></i> Settings
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary d-none d-md-flex align-items-center">
+            <i class="bi bi-clock me-2"></i> Today's Schedule
+          </button>
+          <div class="position-relative">
+            <button class="btn btn-light rounded-circle position-relative">
+              <i class="bi bi-chat-square-text"></i>
+              <span class="notification-badge"></span>
+            </button>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="user-avatar">JD</div>
+            <span class="d-none d-md-block">John Doe</span>
+            <i class="bi bi-chevron-down text-muted small"></i>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="p-4">
+      <div class="mb-4">
+        <h1 class="h3 fw-bold" style="color: var(--secondary-color);">Notifications</h1>
+        <p class="text-muted small">All your notications and updates gathered in one location.</p>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-header bg-white border-0 pb-0">
+            <h5 class="card-title">Add Waste type</h5>
+          </div>
+          <div class="card-body">
+            <div class="schedule-item">
+              <div class="d-flex justify-content-between align-items-center">
+
+              <form action="{% url 'add_edit_waste_type' get_wastetype_id %}" method="POST" enctype="">
+                  {% csrf_token %}
+
+                  <div class="form-group">
+                      <label for="quantity">Name:</label>
+                      <input type="Text" class="form-control" id="quantity" name="name" required>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="description">Description:</label>
+                      <textarea class="form-control" name="description" id="description" name="description" rows="3"></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+
+
+
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+
+    </div>
+  </div>
+
+{% endblock %}
