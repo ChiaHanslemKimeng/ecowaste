@@ -86,5 +86,29 @@ def add_waste_availability(request):
 
 		return HttpResponseRedirect('/users/home/')
 	else:
-		return render(request, 'waste/add_waste_availability.html', {})
+		waste_types = WasteType.objects.all()
+		return render(request, 'waste/add_waste_availability.html', {'waste_types':waste_types})
 	
+
+@transaction.atomic
+@login_required(login_url='/users/login/')
+def collections(request):
+	user = request.user 
+
+	waste_requests = WasteAvailabilityNotification.objects.all()
+	return render(request, 'waste/collections.html', {"waste_requests":waste_requests})
+
+
+@transaction.atomic
+@login_required(login_url='/users/login/')
+def reports(request):
+	user = request.user 
+
+	return render(request, 'waste/reports.html', {})
+
+@transaction.atomic
+@login_required(login_url='/users/login/')
+def settings(request):
+	user = request.user 
+
+	return render(request, 'waste/settings.html', {})

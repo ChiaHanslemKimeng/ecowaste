@@ -20,7 +20,7 @@ urlpatterns += [
 
     path('users/', include('users.urls')),
 
-    path('waste/', include('waste.urls')),
+    path('waste/', include('waste.urls')), 
 
 ]
 

@@ -10,6 +10,12 @@ urlpatterns = [
 
     # path('add_edit_waste_type/<wastetype_id>/', add_edit_waste_type, name='add_edit_waste_type'),
 
-    path('add_waste_availability/', add_waste_availability, name='add_waste_availability'), 
+    path('add_waste_availability/', add_waste_availability, name='add_waste_availability'),
+
+    path('collections/', collections, name='collections'), 
+
+    path('reports/', reports, name='reports'), 
+
+    path('settings/', settings, name='settings'), 
 ]
 

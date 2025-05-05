@@ -95,8 +95,10 @@
         <div class="card-header bg-white border-0 pb-0">
           <h5 class="card-title">Agencies</h5>
           <!-- <p class="text-muted small">Next 24 hours</p> -->
+          <a href="{% url 'add_user' %}">Add User</a>
         </div>
         <div class="card-body">
+          {% for user in users %}
           <div class="schedule-item">
             <div class="d-flex justify-content-between align-items-center">
               <div class="d-flex align-items-center">
@@ -104,79 +106,15 @@
                   <i class="bi bi-clock"></i>
                 </div>
                 <div>
-                  <p class="mb-0 fw-medium">EcoSwift Waste Solutions</p>
-                  <p class="mb-0 text-muted small">Littoral Region</p>
+                  <p class="mb-0 fw-medium">{{user.get_full_name}}</p>
+                  <p class="mb-0 text-muted small">{% if user.is_standard %} Standard user {% elif user.is_admin %}Admin User{% elif user.is_staff_member %} Staff User {% endif %}</p>
                 </div>
               </div>
-              <button class="btn btn-outline-secondary d-none d-md-flex align-items-center">
-                   Suscribe
-                </button>
+              <button class="btn btn-outline-secondary d-none d-md-flex align-items-center"> Edit </button>
             </div>
           </div>
-          <div class="schedule-item">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="bi bi-clock"></i>
-                </div>
-                <div>
-                  <p class="mb-0 fw-medium">CleanTrail Pickup Services</p>
-                  <p class="mb-0 text-muted small">Center Region</p>
-                </div>
-              </div>
-              <button class="btn btn-outline-secondary d-none d-md-flex align-items-center">
-                  Suscribe
-               </button>
-            </div>
-          </div>
-          <div class="schedule-item">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="bi bi-clock"></i>
-                </div>
-                <div>
-                  <p class="mb-0 fw-medium">GreenHaul Waste Co.</p>
-                  <p class="mb-0 text-muted small">South West Region</p>
-                </div>
-              </div>
-              <button class="btn btn-outline-secondary d-none d-md-flex align-items-center">
-                  Suscribe
-               </button>
-            </div>
-          </div>
-          <div class="schedule-item mb-0">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="bi bi-clock"></i>
-                </div>
-                <div>
-                  <p class="mb-0 fw-medium">TrashAway Logistics</p>
-                  <p class="mb-0 text-muted small">South West Region</p>
-                </div>
-              </div>
-              <button class="btn btn-outline-secondary d-none d-md-flex align-items-center">
-                  Suscribe
-               </button>
-            </div>
-          </div>
-          <div class="schedule-item mb-0">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="bi bi-clock"></i>
-                </div>
-                <div>
-                  <p class="mb-0 fw-medium">NeatNest Collectors</p>
-                  <p class="mb-0 text-muted small">North West Region</p>
-                </div>
-              </div>
-              <button class="btn btn-outline-secondary d-none d-md-flex align-items-center">
-                  Suscribe
-               </button>
-            </div>
-          </div>
+          {% endfor %}
+         
         </div>
       </div>
     </div>

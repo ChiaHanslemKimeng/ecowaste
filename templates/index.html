@@ -190,28 +190,29 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{% url 'collections' %}">
                 <i class="bi bi-truck"></i> Collections Request
               </a>
             </li>
+            {% if request.user.is_admin or user.is_superuser %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'add_edit_waste_type' 'new' %}">
                 <i class="bi bi-trash"></i> Waste Types
               </a>
             </li>
            
-            <li class="nav-item">
+           <!--  <li class="nav-item">
               <a class="nav-link" href="#">
                 <i class="bi bi-calendar"></i> Schedule
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" href="{% url 'users' %}">
                 <i class="bi bi-people"></i> Staff
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{% url 'reports' %}#">
                 <i class="bi bi-bar-chart"></i> Reports
               </a>
             </li>
@@ -222,10 +223,12 @@
             </li>
            
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{% url 'settings' %}">
                 <i class="bi bi-gear"></i> Settings
               </a>
             </li>
+            {% endif %}
+
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">
                 <i class="bi bi-gear"></i> Logout
@@ -323,6 +326,8 @@
             <p class="text-muted small">Overview of waste collection and recycling operations</p>
           </div>
 
+
+          {% if request.user.is_admin or user.is_staff_member or user.is_superuser %}
           <!-- Stats Cards -->
           <div class="row g-3 mb-4">
             <div class="col-md-6 col-lg-3">
@@ -598,6 +603,8 @@
               </div>
             </div>
           </div>
+
+          {% endif %}
         </div>
       </div>
        {% endblock %}

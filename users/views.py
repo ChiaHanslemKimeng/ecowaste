@@ -35,7 +35,7 @@ def login_user(request):
 			error_msg = "invalid Username or Password"
 			return render(request, 'login.html', {'user': user, 'error_msg':error_msg})
 	else:
-		return render(request, 'users/login.html', {'user':user})
+		return render(request, 'login.html', {'user':user})
 
 @login_required
 def home(request):
@@ -96,6 +96,7 @@ def register_user(request):
 		new_user.first_name = first_name
 		new_user.last_name = last_name
 		new_user.phone1 = phone_number
+		new_user.is_standard = True
 		new_user.save()
 
 		login(request, new_user)
@@ -116,5 +117,72 @@ def messages(request):
 
 def users(request):
 	user = request.user
- 
-	return render(request, 'users/users.html', {})
+
+	users = User.objects.all()
+	return render(request, 'users/users.html', {'users':users})
+
+
+
+@transaction.atomic
+@login_required
+def add_user(request):
+	user = request.user
+	
+	if request.POST:
+		print(request.POST)
+
+		first_name = ' '.join(request.POST['first_name'].strip().split())
+		last_name = ' '.join(request.POST['last_name'].strip().split())
+		email = request.POST['email']
+		phone_number = request.POST['phone']
+		username = email
+		if not validate_email(email):
+			error_msg = "Invalid email address"
+			return render(request, 'users/add_user.html', {'error_msg': error_msg, })
+		password1 = request.POST['password']
+		password2 = request.POST['password2']
+
+		if password1 != password2:
+			error_msg = "Passwords does not match"
+			return render(request, 'users/add_user.html', {'error_msg': error_msg, })
+		
+		max_pass_length = 8
+		if len(password1) < max_pass_length:
+			error_msg = "Password must be at least 8 characters"
+			return render(request, 'users/add_user.html', {'error_msg': error_msg, })
+
+		check_username = None
+		try:
+			check_username = User.objects.get(username__iexact=username)
+		except:
+			pass
+		if check_username:
+			error_msg = "Email already taken!"
+			return render(request, 'users/add_user.html', {'error_msg': error_msg, })
+
+
+		"""create user"""
+		new_user =  User()
+		new_user.username = username
+		new_user.set_password(password1)
+		new_user.email = email
+		new_user.is_staff = False
+		new_user.is_active = True
+		new_user.first_name = first_name
+		new_user.last_name = last_name
+		new_user.phone1 = phone_number
+
+			# User role classification
+		user_type = request.POST.get('user_type')
+		new_user.is_admin = user_type == 'admin'
+		new_user.is_staff_member = user_type == 'staff'
+		new_user.is_standard = user_type == 'standard'
+
+		new_user.save()
+
+		login(request, new_user)
+
+		return HttpResponseRedirect("/users/home/")
+
+	else:
+		return render(request, 'users/add_user.html', {})

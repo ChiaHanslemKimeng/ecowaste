@@ -21,6 +21,8 @@ urlpatterns = (
 
 	path('users/', users, name='users'), 
 
+	path('add_user/', add_user, name='add_user'),
+
 
 	# path('user_profile/<user_id>/', user_profile, name='user_profile'),
 
